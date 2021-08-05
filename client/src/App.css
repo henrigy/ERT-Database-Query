@@ -1,38 +1,83 @@
 .App {
-  text-align: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color: #333;
+	padding: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+	cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/*search area input and buttons*/
+.searchArea {
+	background-color: rgb(226, 227, 225);
+	padding: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.topRow {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	margin-bottom: -10px;
+	margin-top: -10px;
 }
 
-.App-link {
-  color: #61dafb;
+.searchInput {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchInput input {
+	margin-right: 5px;
+}
+
+.moreButtons button {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/*adding data entry*/
+.addingEntry {
+	background-color: rgb(242, 242, 242);
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-top: 10px;
+}
+
+.line1 {
+	border: 0.5px dashed #333;
+}
+
+.box {
+	border: 2px solid #333;
+	padding: 15px;
+	padding-right: 25px;
+	padding-top: 0px;
+	background-color: rgb(226, 227, 225);
+}
+
+.box h4 {
+	margin-bottom: 5px;
+	margin-top: 15px;
+}
+
+.box input {
+	width: 100%;
+	min-height: 30px;
+	background-color: rgb(241, 241, 179);
+	border: 1px solid #333;
+	color: #36608b;
+	padding-left: 3px;
+	font-weight: bold;
+}
+
+.box .addDataButton {
+	margin-top: 10px;
+	text-align: right;
+	margin-right: -7px;
 }

@@ -152,7 +152,8 @@ function App() {
 						<div class="oneEntry">
 							<p class="line2"></p>
 							<div class="dataBox">
-								<div class="editDataEntryButton">
+								<div class="topButtons">
+									<button>Delete Data Entry</button>
 									<button>Edit Data Entry</button>
 								</div>
 								<h4>FTA Number:</h4>

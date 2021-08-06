@@ -141,11 +141,15 @@ button {
 	margin: 0px;
 }
 
-.editDataEntryButton {
+.topButtons {
 	margin-top: 10px;
 	text-align: right;
 	margin-right: -7px;
 	margin-bottom: -10px;
+}
+
+.topButtons button {
+	margin-left: 10px;
 }
 
 .bottomButtons {

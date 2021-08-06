@@ -13,6 +13,8 @@ function App() {
 	const [APNNumber, setAPNNumber] = useState(0);
 	const [partDescription, setPartDescription] = useState("");
 
+	const [dataList, setDataList] = useState([]);
+
 	const addData = () => {
 		Axios.post("http://localhost:3002/create", {
 			FTANumber: FTANumber,
@@ -24,7 +26,25 @@ function App() {
 			APNNumber: APNNumber,
 			partDescription: partDescription,
 		}).then(() => {
-			console.log("success");
+			setDataList([
+				...dataList,
+				{
+					FTANumber: FTANumber,
+					FTARevision: FTARevision,
+					testFixture: testFixture,
+					reference: reference,
+					partNumber: partNumber,
+					partRevision: partRevision,
+					APNNumber: APNNumber,
+					partDescription: partDescription,
+				},
+			]);
+		});
+	};
+
+	const getData = () => {
+		Axios.get("http://localhost:3002/data").then((response) => {
+			setDataList(response.data);
 		});
 	};
 
@@ -44,14 +64,14 @@ function App() {
 				</div>
 				<div class="moreButtons">
 					<button>Create Data Entry</button>
-					<button>Display All Data Entries</button>
+					<button onClick={getData}>Display All Data Entries</button>
 				</div>
 			</div>
 
 			{/*area for adding a data entry*/}
 			<div class="addingEntry">
 				<h2>Create Data Entry:</h2>
-				<p class="line1"></p>
+				<h5 class="line1"></h5>
 				<div class="box">
 					<h4>FTA Number:</h4>
 					<input
@@ -124,27 +144,57 @@ function App() {
 				</div>
 			</div>
 
-			{/*area for display data entry*/}
+			{/*area for displaying data entries*/}
 			<div class="dataDisplay">
 				<h2>Data Display:</h2>
-				<p class="line2"></p>
-				<div class="entryBox">
-					<div class="editEntryButton">
-						<button>Edit Data Entry</button>
-					</div>
-					<h4>FTA Number:</h4>
-					<h4>FTA Revision:</h4>
-					<h4>Test Fixture:</h4>
-					<h4>Reference(s):</h4>
-					<h4>Part Number:</h4>
-					<h4>Part Revision:</h4>
-					<h4>APN Number:</h4>
-					<h4>Part Description:</h4>
-					<div class="cancelSaveEntry">
-						<button>Cancel Changes</button>
-						<button>Save Changes</button>
-					</div>
-				</div>
+				{dataList.map((val, key) => {
+					return (
+						<div class="oneEntry">
+							<p class="line2"></p>
+							<div class="dataBox">
+								<div class="editDataEntryButton">
+									<button>Edit Data Entry</button>
+								</div>
+								<h4>FTA Number:</h4>
+								<div class="value">
+									<h5>{val.FTANumber}</h5>
+								</div>
+								<h4>FTA Revision:</h4>
+								<div class="value">
+									<h5>{val.FTARevision}</h5>
+								</div>
+								<h4>Test Fixture:</h4>{" "}
+								<div class="value">
+									<h5>{val.testFixture}</h5>
+								</div>
+								<h4>Reference(s):</h4>{" "}
+								<div class="value">
+									<h5>{val.reference}</h5>
+								</div>
+								<h4>Part Number:</h4>{" "}
+								<div class="value">
+									<h5>{val.partNumber}</h5>
+								</div>
+								<h4>Part Revision:</h4>{" "}
+								<div class="value">
+									<h5>{val.partRevision}</h5>
+								</div>
+								<h4>APN Number:</h4>{" "}
+								<div class="value">
+									<h5>{val.APNNumber}</h5>
+								</div>
+								<h4>Part Description:</h4>{" "}
+								<div class="value">
+									<h5>{val.partDescription}</h5>
+								</div>
+								<div class="bottomButtons">
+									<button>Cancel Changes</button>
+									<button>Save Changes</button>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);

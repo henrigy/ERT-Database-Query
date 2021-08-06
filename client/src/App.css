@@ -53,6 +53,7 @@ button {
 .line1 {
 	border: 0.5px dashed #333;
 	margin-top: -10px;
+	margin-bottom: 20px;
 }
 
 .box {
@@ -92,7 +93,6 @@ button {
 }
 
 /*data display area*/
-
 .dataDisplay {
 	background-color: rgb(242, 242, 242);
 	text-align: left;
@@ -101,32 +101,60 @@ button {
 	padding-bottom: 15px;
 }
 
-.line2 {
-	border: 0.5px dashed #333;
-	margin-top: -10px;
-}
-
-.entryBox {
+.dataBox {
 	border: 2px solid #333;
 	padding: 15px;
 	padding-right: 25px;
 	padding-top: 0px;
 	background-color: rgb(226, 227, 225);
-	margin-bottom: 0px;
+	margin-bottom: 30px;
 }
 
-.entryBox .editEntryButton {
+.line2 {
+	border: 0.5px dashed #333;
+	margin-top: -10px;
+	margin-bottom: 20px;
+}
+
+.dataBox h4 {
+	margin-bottom: 5px;
+	margin-top: 15px;
+}
+
+.value {
 	margin-right: -7px;
-	text-align: right;
+	min-height: 35px;
+	display: flex;
+	align-items: center;
+	padding: 0px;
+	padding-left: 3px;
+	width: 100%;
+	background-color: rgb(241, 241, 179);
+	border: 1px solid #333;
+	color: #36608b;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.value h5 {
+	vertical-align: middle;
+	margin: 0px;
+}
+
+.editDataEntryButton {
 	margin-top: 10px;
+	text-align: right;
+	margin-right: -7px;
+	margin-bottom: -10px;
 }
 
-.entryBox .cancelSaveEntry {
+.bottomButtons {
+	margin-top: 10px;
+	margin-bottom: 0px;
 	text-align: right;
-	margin-bottom: -5px;
 	margin-right: -7px;
 }
 
-.entryBox .cancelSaveEntry button {
+.bottomButtons button {
 	margin-left: 10px;
 }

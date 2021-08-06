@@ -50,7 +50,7 @@ function App() {
 
 			{/*area for adding a data entry*/}
 			<div class="addingEntry">
-				<h2>Create Data Entry</h2>
+				<h2>Create Data Entry:</h2>
 				<p class="line1"></p>
 				<div class="box">
 					<h4>FTA Number:</h4>
@@ -101,7 +101,7 @@ function App() {
 						}}
 					/>
 
-					<h4>APN Number</h4>
+					<h4>APN Number:</h4>
 					<input
 						type="number"
 						onChange={(event) => {
@@ -109,7 +109,7 @@ function App() {
 						}}
 					/>
 
-					<h4>Part Description</h4>
+					<h4>Part Description:</h4>
 					<input
 						type="text"
 						onChange={(event) => {
@@ -118,7 +118,31 @@ function App() {
 					/>
 
 					<div class="addDataButton">
-						<button onClick={addData}>Add Data Entry</button>
+						<button>Cancel Data Entry</button>
+						<button onClick={addData}>Save Data Entry</button>
+					</div>
+				</div>
+			</div>
+
+			{/*area for display data entry*/}
+			<div class="dataDisplay">
+				<h2>Data Display:</h2>
+				<p class="line2"></p>
+				<div class="entryBox">
+					<div class="editEntryButton">
+						<button>Edit Data Entry</button>
+					</div>
+					<h4>FTA Number:</h4>
+					<h4>FTA Revision:</h4>
+					<h4>Test Fixture:</h4>
+					<h4>Reference(s):</h4>
+					<h4>Part Number:</h4>
+					<h4>Part Revision:</h4>
+					<h4>APN Number:</h4>
+					<h4>Part Description:</h4>
+					<div class="cancelSaveEntry">
+						<button>Cancel Changes</button>
+						<button>Save Changes</button>
 					</div>
 				</div>
 			</div>

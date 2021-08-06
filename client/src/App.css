@@ -15,6 +15,7 @@ button {
 .searchArea {
 	background-color: rgb(226, 227, 225);
 	padding: 10px;
+	margin-bottom: 10px;
 }
 
 .topRow {
@@ -47,7 +48,6 @@ button {
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-bottom: 15px;
-	margin-top: 10px;
 }
 
 .line1 {
@@ -61,6 +61,7 @@ button {
 	padding-right: 25px;
 	padding-top: 0px;
 	background-color: rgb(226, 227, 225);
+	margin-bottom: 0px;
 }
 
 .box h4 {
@@ -83,4 +84,49 @@ button {
 	margin-top: 10px;
 	text-align: right;
 	margin-right: -7px;
+	margin-bottom: -5px;
+}
+
+.box .addDataButton button {
+	margin-left: 10px;
+}
+
+/*data display area*/
+
+.dataDisplay {
+	background-color: rgb(242, 242, 242);
+	text-align: left;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+}
+
+.line2 {
+	border: 0.5px dashed #333;
+	margin-top: -10px;
+}
+
+.entryBox {
+	border: 2px solid #333;
+	padding: 15px;
+	padding-right: 25px;
+	padding-top: 0px;
+	background-color: rgb(226, 227, 225);
+	margin-bottom: 0px;
+}
+
+.entryBox .editEntryButton {
+	margin-right: -7px;
+	text-align: right;
+	margin-top: 10px;
+}
+
+.entryBox .cancelSaveEntry {
+	text-align: right;
+	margin-bottom: -5px;
+	margin-right: -7px;
+}
+
+.entryBox .cancelSaveEntry button {
+	margin-left: 10px;
 }

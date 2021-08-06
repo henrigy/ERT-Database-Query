@@ -71,7 +71,7 @@ function App() {
 			{/*area for adding a data entry*/}
 			<div class="addingEntry">
 				<h2>Create Data Entry:</h2>
-				<h5 class="line1"></h5>
+				<p class="line1"></p>
 				<div class="box">
 					<h4>FTA Number:</h4>
 					<input
@@ -196,6 +196,53 @@ function App() {
 						</div>
 					);
 				})}
+			</div>
+
+			{/*creating the modals*/}
+			{/*modal for saving an added data entry */}
+			<div class="saveAddedEntry">
+				<div class="saveAddedEntryContent">
+					<h3>
+						Are you sure that you want to save this data entry? Saving this data
+						entry will update the database.
+					</h3>
+					<button>No</button>
+					<button>Yes</button>
+				</div>
+			</div>
+
+			{/*modal for saving edits made to an existing data entry*/}
+			<div class="editExistingEntry">
+				<div class="editExistingEntryContent">
+					<h3>
+						Are you sure that you want to save the changes made? Saving this
+						data entry will update the database.
+					</h3>
+					<button>No</button>
+					<button>Yes</button>
+				</div>
+			</div>
+
+			{/*modal for deleting an existing data entry*/}
+			<div class="deleteExistingEntry">
+				<div class="deleteExistingEntryContent">
+					<h3>
+						Are you sure that you want to delete this data entry? Deleting this
+						data entry will remove it from the database.
+					</h3>
+					<button>No</button>
+					<button>Yes</button>
+				</div>
+			</div>
+
+			{/*modal confirming the changes have been made*/}
+			<div class="saveConfirm">
+				<div class="saveConfirmContent">
+					<h3>
+						Your changes have been saved and the database has been updated.
+					</h3>
+					<button>Return to Main Display</button>
+				</div>
 			</div>
 		</div>
 	);

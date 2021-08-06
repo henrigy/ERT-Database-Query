@@ -1,10 +1,36 @@
 import "./App.css";
-import Title from "./Banner.js";
+import Banner from "./Banner.js";
+import { useState } from "react";
+import Axios from "axios";
 
 function App() {
+	const [FTANumber, setFTANumber] = useState(0);
+	const [FTARevision, setFTARevision] = useState(0);
+	const [testFixture, setTestFixture] = useState("");
+	const [reference, setReference] = useState("");
+	const [partNumber, setPartNumber] = useState("");
+	const [partRevision, setPartRevision] = useState("");
+	const [APNNumber, setAPNNumber] = useState(0);
+	const [partDescription, setPartDescription] = useState("");
+
+	const addData = () => {
+		Axios.post("http://localhost:3002/create", {
+			FTANumber: FTANumber,
+			FTARevision: FTARevision,
+			testFixture: testFixture,
+			reference: reference,
+			partNumber: partNumber,
+			partRevision: partRevision,
+			APNNumber: APNNumber,
+			partDescription: partDescription,
+		}).then(() => {
+			console.log("success");
+		});
+	};
+
 	return (
 		<div class="App">
-			<Title />
+			<Banner />
 			{/*area for search bar, add entry button, & display all entries button*/}
 			<div class="searchArea">
 				<div class="topRow">
@@ -28,23 +54,71 @@ function App() {
 				<p class="line1"></p>
 				<div class="box">
 					<h4>FTA Number:</h4>
-					<input />
+					<input
+						type="number"
+						onChange={(event) => {
+							setFTANumber(event.target.value);
+						}}
+					/>
+
 					<h4>FTA Revision:</h4>
-					<input />
+					<input
+						type="number"
+						onChange={(event) => {
+							setFTARevision(event.target.value);
+						}}
+					/>
+
 					<h4>Test Fixture:</h4>
-					<input />
+					<input
+						type="text"
+						onChange={(event) => {
+							setTestFixture(event.target.value);
+						}}
+					/>
+
 					<h4>Reference(s):</h4>
-					<input />
+					<input
+						type="text"
+						onChange={(event) => {
+							setReference(event.target.value);
+						}}
+					/>
+
 					<h4>Part Number:</h4>
-					<input />
+					<input
+						type="text"
+						onChange={(event) => {
+							setPartNumber(event.target.value);
+						}}
+					/>
+
 					<h4>Part Revision:</h4>
-					<input />
+					<input
+						type="text"
+						onChange={(event) => {
+							setPartRevision(event.target.value);
+						}}
+					/>
+
 					<h4>APN Number</h4>
-					<input />
+					<input
+						type="number"
+						onChange={(event) => {
+							setAPNNumber(event.target.value);
+						}}
+					/>
+
 					<h4>Part Description</h4>
-					<input />
+					<input
+						type="text"
+						onChange={(event) => {
+							setPartDescription(event.target.value);
+						}}
+					/>
+
 					<div class="addDataButton">
-						<button>Add Data Entry</button>
+						<button onClick={addData}>Add Data Entry</button>
 					</div>
 				</div>
 			</div>

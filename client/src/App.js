@@ -15,7 +15,16 @@ function App() {
 
 	const [dataList, setDataList] = useState([]);
 
+	const [allDataVisible, setAllDataVisible] = useState(false);
+	const [createVisible, setCreateVisible] = useState(false);
+	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
+	const [deleteVisible, setDeleteVisible] = useState(false);
+
 	const addData = () => {
+		setSaveAddedEntryVisible(false);
+
+		console.log("setChangesSavedVisible is true");
+
 		Axios.post("http://localhost:3002/create", {
 			FTANumber: FTANumber,
 			FTARevision: FTARevision,
@@ -43,9 +52,16 @@ function App() {
 	};
 
 	const getData = () => {
+		setAllDataVisible(true);
+		setCreateVisible(false);
 		Axios.get("http://localhost:3002/data").then((response) => {
 			setDataList(response.data);
 		});
+	};
+
+	const showCreatePanel = () => {
+		setAllDataVisible(false);
+		setCreateVisible(true);
 	};
 
 	const deleteDataEntry = (id) => {
@@ -73,13 +89,16 @@ function App() {
 					</div>
 				</div>
 				<div class="moreButtons">
-					<button>Create Data Entry</button>
+					<button onClick={showCreatePanel}>Create Data Entry</button>
 					<button onClick={getData}>Display All Data Entries</button>
 				</div>
 			</div>
 
 			{/*area for adding a data entry*/}
-			<div class="addingEntry">
+			<div
+				class="addingEntry"
+				style={{ display: createVisible ? "block" : "none" }}
+			>
 				<h2>Create Data Entry:</h2>
 				<p class="line1"></p>
 				<div class="box">
@@ -149,13 +168,18 @@ function App() {
 
 					<div class="addDataButton">
 						<button>Cancel Data Entry</button>
-						<button onClick={addData}>Save Data Entry</button>
+						<button onClick={() => setSaveAddedEntryVisible(true)}>
+							Save Data Entry
+						</button>
 					</div>
 				</div>
 			</div>
 
 			{/*area for displaying data entries*/}
-			<div class="dataDisplay">
+			<div
+				class="dataDisplay"
+				style={{ display: allDataVisible ? "block" : "none" }}
+			>
 				<h2>Data Display:</h2>
 				{dataList.map((val, key) => {
 					return (
@@ -163,14 +187,31 @@ function App() {
 							<p class="line2"></p>
 							<div class="dataBox">
 								<div class="topButtons">
-									<button
-										onClick={() => {
-											deleteDataEntry(val.id);
-										}}
-									>
+									<button onClick={() => setDeleteVisible(true)}>
 										Delete Data Entry
 									</button>
 									<button>Edit Data Entry</button>
+								</div>
+								{/*modal for deleting an existing data entry*/}
+								<div
+									class="deleteExistingEntry"
+									style={{ display: deleteVisible ? "block" : "none" }}
+								>
+									<div class="deleteExistingEntryContent">
+										<h3>
+											Are you sure that you want to delete this data entry?
+											Deleting this data entry will remove it from the database.
+										</h3>
+										<button onClick={() => setDeleteVisible(false)}>No</button>
+										<button
+											onClick={() => {
+												setDeleteVisible(false);
+												deleteDataEntry(val.id);
+											}}
+										>
+											Yes
+										</button>
+									</div>
 								</div>
 								<h4>FTA Number:</h4>
 								<div class="value">
@@ -216,14 +257,17 @@ function App() {
 
 			{/*creating the modals*/}
 			{/*modal for saving an added data entry */}
-			<div class="saveAddedEntry">
+			<div
+				class="saveAddedEntry"
+				style={{ display: saveAddedEntryVisible ? "block" : "none" }}
+			>
 				<div class="saveAddedEntryContent">
 					<h3>
 						Are you sure that you want to save this data entry? Saving this data
 						entry will update the database.
 					</h3>
-					<button>No</button>
-					<button>Yes</button>
+					<button onClick={() => setSaveAddedEntryVisible(false)}>No</button>
+					<button onClick={addData}>Yes</button>
 				</div>
 			</div>
 
@@ -236,28 +280,6 @@ function App() {
 					</h3>
 					<button>No</button>
 					<button>Yes</button>
-				</div>
-			</div>
-
-			{/*modal for deleting an existing data entry*/}
-			<div class="deleteExistingEntry">
-				<div class="deleteExistingEntryContent">
-					<h3>
-						Are you sure that you want to delete this data entry? Deleting this
-						data entry will remove it from the database.
-					</h3>
-					<button>No</button>
-					<button>Yes</button>
-				</div>
-			</div>
-
-			{/*modal confirming the changes have been made*/}
-			<div class="saveConfirm">
-				<div class="saveConfirmContent">
-					<h3>
-						Your changes have been saved and the database has been updated.
-					</h3>
-					<button>Return to Main Display</button>
 				</div>
 			</div>
 		</div>

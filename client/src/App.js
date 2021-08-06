@@ -24,6 +24,7 @@ function App() {
 	const [searchOperatorDisplay, setSearchOperatorDisplay] = useState("");
 	const [searchScreenVisible, setSearchScreenVisible] = useState(false);
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
+	const [deleteBackgroundVisible, setDeleteBackgroundVisible] = useState(false);
 
 	const nowSearching = () => {
 		setAllDataVisible(false);
@@ -116,6 +117,16 @@ function App() {
 				})
 			);
 		});
+	};
+
+	const showDeleteModal = () => {
+		setDeleteVisible(true);
+		setDeleteBackgroundVisible(true);
+	};
+
+	const noDelete = () => {
+		setDeleteVisible(false);
+		setDeleteBackgroundVisible(false);
 	};
 
 	return (
@@ -233,8 +244,8 @@ function App() {
 					</div>
 				</div>
 			</div>
-
 			{/*area for displaying data entries*/}
+
 			<div
 				class="dataDisplay"
 				style={{ display: allDataVisible ? "block" : "none" }}
@@ -242,14 +253,16 @@ function App() {
 				<h2>Data Display:</h2>
 				<p class="line2"></p>
 
+				<div
+					class="deleteModalBackground"
+					style={{ display: deleteBackgroundVisible ? "block" : "none" }}
+				></div>
 				{dataList.map((val, key) => {
 					return (
 						<div class="oneEntry">
 							<div class="dataBox">
 								<div class="topButtons">
-									<button onClick={() => setDeleteVisible(true)}>
-										Delete Data Entry
-									</button>
+									<button onClick={showDeleteModal}>Delete Data Entry</button>
 									<button>Edit Data Entry</button>
 								</div>
 								{/*modal for deleting an existing data entry*/}
@@ -262,9 +275,10 @@ function App() {
 											Are you sure that you want to delete this data entry?
 											Deleting this data entry will remove it from the database.
 										</h3>
-										<button onClick={() => setDeleteVisible(false)}>No</button>
+										<button onClick={noDelete}>No</button>
 										<button
 											onClick={() => {
+												setDeleteBackgroundVisible(false);
 												setSaveConfirmVisible(true);
 												setDeleteVisible(false);
 												deleteDataEntry(val.id);

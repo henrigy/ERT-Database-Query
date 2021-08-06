@@ -20,6 +20,16 @@ function App() {
 	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
 	const [deleteVisible, setDeleteVisible] = useState(false);
 	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
+	const [searchOperator, setSearchOperator] = useState("");
+	const [searchOperatorDisplay, setSearchOperatorDisplay] = useState("");
+	const [searchScreenVisible, setSearchScreenVisible] = useState(false);
+
+	const nowSearching = () => {
+		setAllDataVisible(false);
+		setCreateVisible(false);
+		setSearchScreenVisible(true);
+		setSearchOperatorDisplay(searchOperator);
+	};
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -56,6 +66,7 @@ function App() {
 	const getData = () => {
 		setAllDataVisible(true);
 		setCreateVisible(false);
+		setSearchScreenVisible(false);
 		Axios.get("http://localhost:3002/data").then((response) => {
 			setDataList(response.data);
 		});
@@ -64,6 +75,7 @@ function App() {
 	const showCreatePanel = () => {
 		setAllDataVisible(false);
 		setCreateVisible(true);
+		setSearchScreenVisible(false);
 	};
 
 	const deleteDataEntry = (id) => {
@@ -85,8 +97,13 @@ function App() {
 					<h2>PVGS Electronic Rework Team Query</h2>
 					<div class="searchInput">
 						<div class="input">
-							<input autoComplete="off" style={{ paddingLeft: "3px" }}></input>
-							<button>Search</button>
+							<input
+								autoComplete="off"
+								style={{ paddingLeft: "3px" }}
+								value={searchOperator}
+								onChange={(e) => setSearchOperator(e.target.value)}
+							></input>
+							<button onClick={nowSearching}>Search</button>
 						</div>
 					</div>
 				</div>
@@ -183,10 +200,11 @@ function App() {
 				style={{ display: allDataVisible ? "block" : "none" }}
 			>
 				<h2>Data Display:</h2>
+				<p class="line2"></p>
+
 				{dataList.map((val, key) => {
 					return (
 						<div class="oneEntry">
-							<p class="line2"></p>
 							<div class="dataBox">
 								<div class="topButtons">
 									<button onClick={() => setDeleteVisible(true)}>
@@ -258,6 +276,15 @@ function App() {
 				})}
 			</div>
 
+			{/*search display*/}
+			<div
+				class="searchScreen"
+				style={{ display: searchScreenVisible ? "block" : "none" }}
+			>
+				<h2>Search Results for "{searchOperatorDisplay}":</h2>
+				<p class="line3"></p>
+			</div>
+
 			{/*creating the modals*/}
 			{/*modal for saving an added data entry */}
 			<div
@@ -274,17 +301,6 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for saving edits made to an existing data entry*/}
-			<div class="editExistingEntry">
-				<div class="editExistingEntryContent">
-					<h3>
-						Are you sure that you want to save the changes made? Saving this
-						data entry will update the database.
-					</h3>
-					<button>No</button>
-					<button>Yes</button>
-				</div>
-			</div>
 			{/*modal for confirming saved changes*/}
 			<div
 				class="saveConfirm"

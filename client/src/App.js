@@ -19,9 +19,11 @@ function App() {
 	const [createVisible, setCreateVisible] = useState(false);
 	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
 	const [deleteVisible, setDeleteVisible] = useState(false);
+	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
+		setSaveConfirmVisible(true);
 
 		console.log("setChangesSavedVisible is true");
 
@@ -205,6 +207,7 @@ function App() {
 										<button onClick={() => setDeleteVisible(false)}>No</button>
 										<button
 											onClick={() => {
+												setSaveConfirmVisible(true);
 												setDeleteVisible(false);
 												deleteDataEntry(val.id);
 											}}
@@ -280,6 +283,21 @@ function App() {
 					</h3>
 					<button>No</button>
 					<button>Yes</button>
+				</div>
+			</div>
+			{/*modal for confirming saved changes*/}
+			<div
+				class="saveConfirm"
+				style={{ display: saveConfirmVisible ? "block" : "none" }}
+			>
+				<div class="saveConfirmContent">
+					<h3>
+						Your changes have been saved, and the database has been updated with
+						the saved changes.
+					</h3>
+					<button onClick={() => setSaveConfirmVisible(false)}>
+						Return to Main Display
+					</button>
 				</div>
 			</div>
 		</div>

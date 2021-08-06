@@ -48,6 +48,16 @@ function App() {
 		});
 	};
 
+	const deleteDataEntry = (id) => {
+		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
+			setDataList(
+				dataList.filter((val) => {
+					return val.id != id;
+				})
+			);
+		});
+	};
+
 	return (
 		<div class="App">
 			<Banner />
@@ -153,7 +163,13 @@ function App() {
 							<p class="line2"></p>
 							<div class="dataBox">
 								<div class="topButtons">
-									<button>Delete Data Entry</button>
+									<button
+										onClick={() => {
+											deleteDataEntry(val.id);
+										}}
+									>
+										Delete Data Entry
+									</button>
 									<button>Edit Data Entry</button>
 								</div>
 								<h4>FTA Number:</h4>

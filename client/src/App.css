@@ -265,3 +265,29 @@ button {
 	margin-left: 5px;
 	margin-right: 5px;
 }
+
+/*modal to confirm that added data entry will be cancelled*/
+.cancelAdd {
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	background-color: rgb(0, 0, 0, 0.4);
+	width: 100%;
+	height: 100%;
+	padding-top: 10%;
+}
+
+.cancelAddContent {
+	border: 2px solid #888;
+	padding: 15px;
+	background-color: #fefefe;
+	max-width: 60%;
+	text-align: center;
+	margin: auto;
+}
+
+.cancelAddContent button {
+	margin-left: 5px;
+	margin-right: 5px;
+}

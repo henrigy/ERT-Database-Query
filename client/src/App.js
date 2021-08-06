@@ -4,13 +4,13 @@ import { useState } from "react";
 import Axios from "axios";
 
 function App() {
-	const [FTANumber, setFTANumber] = useState(0);
-	const [FTARevision, setFTARevision] = useState(0);
+	const [FTANumber, setFTANumber] = useState("");
+	const [FTARevision, setFTARevision] = useState("");
 	const [testFixture, setTestFixture] = useState("");
 	const [reference, setReference] = useState("");
 	const [partNumber, setPartNumber] = useState("");
 	const [partRevision, setPartRevision] = useState("");
-	const [APNNumber, setAPNNumber] = useState(0);
+	const [APNNumber, setAPNNumber] = useState("");
 	const [partDescription, setPartDescription] = useState("");
 
 	const [dataList, setDataList] = useState([]);
@@ -23,6 +23,7 @@ function App() {
 	const [searchOperator, setSearchOperator] = useState("");
 	const [searchOperatorDisplay, setSearchOperatorDisplay] = useState("");
 	const [searchScreenVisible, setSearchScreenVisible] = useState(false);
+	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 
 	const nowSearching = () => {
 		setAllDataVisible(false);
@@ -34,6 +35,14 @@ function App() {
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
 		setSaveConfirmVisible(true);
+		setFTANumber("");
+		setFTARevision("");
+		setTestFixture("");
+		setReference("");
+		setPartNumber("");
+		setPartRevision("");
+		setAPNNumber("");
+		setPartDescription("");
 
 		console.log("setChangesSavedVisible is true");
 
@@ -63,6 +72,18 @@ function App() {
 		});
 	};
 
+	const resetValues = () => {
+		setCancelAddVisible(false);
+		setFTANumber("");
+		setFTARevision("");
+		setTestFixture("");
+		setReference("");
+		setPartNumber("");
+		setPartRevision("");
+		setAPNNumber("");
+		setPartDescription("");
+	};
+
 	const getData = () => {
 		setAllDataVisible(true);
 		setCreateVisible(false);
@@ -76,6 +97,15 @@ function App() {
 		setAllDataVisible(false);
 		setCreateVisible(true);
 		setSearchScreenVisible(false);
+		setSaveAddedEntryVisible(false);
+		setFTANumber("");
+		setFTARevision("");
+		setTestFixture("");
+		setReference("");
+		setPartNumber("");
+		setPartRevision("");
+		setAPNNumber("");
+		setPartDescription("");
 	};
 
 	const deleteDataEntry = (id) => {
@@ -124,6 +154,7 @@ function App() {
 					<h4>FTA Number:</h4>
 					<input
 						type="number"
+						value={FTANumber}
 						onChange={(event) => {
 							setFTANumber(event.target.value);
 						}}
@@ -132,6 +163,7 @@ function App() {
 					<h4>FTA Revision:</h4>
 					<input
 						type="number"
+						value={FTARevision}
 						onChange={(event) => {
 							setFTARevision(event.target.value);
 						}}
@@ -140,6 +172,7 @@ function App() {
 					<h4>Test Fixture:</h4>
 					<input
 						type="text"
+						value={testFixture}
 						onChange={(event) => {
 							setTestFixture(event.target.value);
 						}}
@@ -148,6 +181,7 @@ function App() {
 					<h4>Reference(s):</h4>
 					<input
 						type="text"
+						value={reference}
 						onChange={(event) => {
 							setReference(event.target.value);
 						}}
@@ -156,6 +190,7 @@ function App() {
 					<h4>Part Number:</h4>
 					<input
 						type="text"
+						value={partNumber}
 						onChange={(event) => {
 							setPartNumber(event.target.value);
 						}}
@@ -164,6 +199,7 @@ function App() {
 					<h4>Part Revision:</h4>
 					<input
 						type="text"
+						value={partRevision}
 						onChange={(event) => {
 							setPartRevision(event.target.value);
 						}}
@@ -172,6 +208,7 @@ function App() {
 					<h4>APN Number:</h4>
 					<input
 						type="number"
+						value={APNNumber}
 						onChange={(event) => {
 							setAPNNumber(event.target.value);
 						}}
@@ -180,13 +217,16 @@ function App() {
 					<h4>Part Description:</h4>
 					<input
 						type="text"
+						value={partDescription}
 						onChange={(event) => {
 							setPartDescription(event.target.value);
 						}}
 					/>
 
 					<div class="addDataButton">
-						<button>Cancel Data Entry</button>
+						<button onClick={() => setCancelAddVisible(true)}>
+							Cancel Data Entry
+						</button>
 						<button onClick={() => setSaveAddedEntryVisible(true)}>
 							Save Data Entry
 						</button>
@@ -314,6 +354,21 @@ function App() {
 					<button onClick={() => setSaveConfirmVisible(false)}>
 						Return to Main Display
 					</button>
+				</div>
+			</div>
+
+			{/*modal confirming cancelling changes on the create data entry display */}
+			<div
+				class="cancelAdd"
+				style={{ display: cancelAddVisible ? "block" : "none" }}
+			>
+				<div class="cancelAddContent">
+					<h3>
+						Are you sure that you want to cancel the edits made? Cancelling will
+						reset all changes.
+					</h3>
+					<button onClick={() => setCancelAddVisible(false)}>No</button>
+					<button onClick={resetValues}>Yes</button>
 				</div>
 			</div>
 		</div>

@@ -26,6 +26,9 @@ function App() {
 	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 
+	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
+	const [showActualDelete, setShowActualDelete] = useState(false);
+
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
 		setSaveConfirmVisible(true);
@@ -114,6 +117,16 @@ function App() {
 		setCreateDataEntryVisible(false);
 		setDataDisplayVisible(false);
 		setDisplaySearchOperator(searchOperator);
+	};
+
+	const showDeleteModal = () => {
+		setDeletingEntryVisible(true);
+		setShowActualDelete(true);
+	};
+
+	const hideDeleteModal = () => {
+		setDeletingEntryVisible(false);
+		setShowActualDelete(false);
 	};
 
 	return (
@@ -244,7 +257,19 @@ function App() {
 						<div class="dataBox">
 							<div class="oneEntry">
 								<div class="topButtons">
-									<button onClick={() => deleteData(val.id)}>
+									<button
+										style={{ display: !showActualDelete ? "block" : "none" }}
+										onClick={showDeleteModal}
+									>
+										Delete Data Entry
+									</button>
+									<button
+										style={{ display: showActualDelete ? "block" : "none" }}
+										onClick={() => {
+											deleteData(val.id);
+											setShowActualDelete(false);
+										}}
+									>
 										Delete Data Entry
 									</button>
 									<button>Edit Data Entry</button>
@@ -343,6 +368,25 @@ function App() {
 					</h3>
 					<button onClick={() => setCancelAddVisible(false)}>No</button>
 					<button onClick={resetValues}>Yes</button>
+				</div>
+			</div>
+
+			{/*modal for deleting a data entry*/}
+			<div
+				class="deletingEntry"
+				style={{ display: deletingEntryVisible ? "block" : "none" }}
+			>
+				<div class="deletingEntryContent">
+					<h3>
+						Deleting a data entry will PERMANENTLY REMOVE it from the database.
+						To proceed with deleting the entry, click the "Proceed" button and
+						click on the "Delete Data Entry" a second time. Otherwise, click the
+						"Cancel Delete" button to cancel deleting the data entry.
+					</h3>
+					<button onClick={hideDeleteModal}>Cancel Delete</button>
+					<button onClick={() => setDeletingEntryVisible(false)}>
+						Proceed
+					</button>
 				</div>
 			</div>
 		</div>

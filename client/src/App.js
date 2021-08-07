@@ -12,22 +12,17 @@ function App() {
 	const [partRevision, setPartRevision] = useState("");
 	const [APNNumber, setAPNNumber] = useState("");
 	const [partDescription, setPartDescription] = useState("");
-
 	const [dataList, setDataList] = useState([]);
-
 	const [createDataEntryVisible, setCreateDataEntryVisible] = useState(false);
 	const [dataDisplayVisible, setDataDisplayVisible] = useState(false);
 	const [resultsVisible, setResultsVisible] = useState(false);
-
 	const [searchOperator, setSearchOperator] = useState("");
 	const [displaySearchOperator, setDisplaySearchOperator] = useState("");
-
 	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
 	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
-
 	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
-	const [showActualDelete, setShowActualDelete] = useState(false);
+	const [buttonID, setButtonID] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -92,7 +87,7 @@ function App() {
 		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
 			setDataList(
 				dataList.filter((val) => {
-					return val.id != id;
+					return val.id !== id;
 				})
 			);
 		});
@@ -119,14 +114,10 @@ function App() {
 		setDisplaySearchOperator(searchOperator);
 	};
 
-	const showDeleteModal = () => {
-		setDeletingEntryVisible(true);
-		setShowActualDelete(true);
-	};
-
-	const hideDeleteModal = () => {
+	const deleteEntry = () => {
 		setDeletingEntryVisible(false);
-		setShowActualDelete(false);
+		deleteData(buttonID);
+		setSaveConfirmVisible(true);
 	};
 
 	return (
@@ -258,20 +249,14 @@ function App() {
 							<div class="oneEntry">
 								<div class="topButtons">
 									<button
-										style={{ display: !showActualDelete ? "block" : "none" }}
-										onClick={showDeleteModal}
-									>
-										Delete Data Entry
-									</button>
-									<button
-										style={{ display: showActualDelete ? "block" : "none" }}
 										onClick={() => {
-											deleteData(val.id);
-											setShowActualDelete(false);
+											setDeletingEntryVisible(true);
+											setButtonID(val.id);
 										}}
 									>
 										Delete Data Entry
 									</button>
+
 									<button>Edit Data Entry</button>
 								</div>
 								<h4>FTA Number:</h4>
@@ -379,14 +364,12 @@ function App() {
 				<div class="deletingEntryContent">
 					<h3>
 						Deleting a data entry will PERMANENTLY REMOVE it from the database.
-						To proceed with deleting the entry, click the "Proceed" button and
-						click on the "Delete Data Entry" a second time. Otherwise, click the
-						"Cancel Delete" button to cancel deleting the data entry.
+						Are you sure that you want to delete this entry?
 					</h3>
-					<button onClick={hideDeleteModal}>Cancel Delete</button>
 					<button onClick={() => setDeletingEntryVisible(false)}>
-						Proceed
+						Cancel Delete
 					</button>
+					<button onClick={deleteEntry}>Delete Entry</button>
 				</div>
 			</div>
 		</div>

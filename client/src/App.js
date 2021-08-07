@@ -370,7 +370,6 @@ function App() {
 						Cancel Delete
 					</button>
 					<button onClick={deleteEntry}>Delete Entry</button>
-					<button>testingGithub</button>
 				</div>
 			</div>
 		</div>

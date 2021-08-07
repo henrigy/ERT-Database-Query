@@ -15,23 +15,16 @@ function App() {
 
 	const [dataList, setDataList] = useState([]);
 
-	const [allDataVisible, setAllDataVisible] = useState(false);
-	const [createVisible, setCreateVisible] = useState(false);
-	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
-	const [deleteVisible, setDeleteVisible] = useState(false);
-	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
-	const [searchOperator, setSearchOperator] = useState("");
-	const [searchOperatorDisplay, setSearchOperatorDisplay] = useState("");
-	const [searchScreenVisible, setSearchScreenVisible] = useState(false);
-	const [cancelAddVisible, setCancelAddVisible] = useState(false);
-	const [deleteBackgroundVisible, setDeleteBackgroundVisible] = useState(false);
+	const [createDataEntryVisible, setCreateDataEntryVisible] = useState(false);
+	const [dataDisplayVisible, setDataDisplayVisible] = useState(false);
+	const [resultsVisible, setResultsVisible] = useState(false);
 
-	const nowSearching = () => {
-		setAllDataVisible(false);
-		setCreateVisible(false);
-		setSearchScreenVisible(true);
-		setSearchOperatorDisplay(searchOperator);
-	};
+	const [searchOperator, setSearchOperator] = useState("");
+	const [displaySearchOperator, setDisplaySearchOperator] = useState("");
+
+	const [saveAddedEntryVisible, setSaveAddedEntryVisible] = useState(false);
+	const [saveConfirmVisible, setSaveConfirmVisible] = useState(false);
+	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -44,8 +37,6 @@ function App() {
 		setPartRevision("");
 		setAPNNumber("");
 		setPartDescription("");
-
-		console.log("setChangesSavedVisible is true");
 
 		Axios.post("http://localhost:3002/create", {
 			FTANumber: FTANumber,
@@ -86,19 +77,28 @@ function App() {
 	};
 
 	const getData = () => {
-		setAllDataVisible(true);
-		setCreateVisible(false);
-		setSearchScreenVisible(false);
+		setCreateDataEntryVisible(false);
+		setDataDisplayVisible(true);
+		setResultsVisible(false);
 		Axios.get("http://localhost:3002/data").then((response) => {
 			setDataList(response.data);
 		});
 	};
 
-	const showCreatePanel = () => {
-		setAllDataVisible(false);
-		setCreateVisible(true);
-		setSearchScreenVisible(false);
-		setSaveAddedEntryVisible(false);
+	const deleteData = (id) => {
+		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
+			setDataList(
+				dataList.filter((val) => {
+					return val.id != id;
+				})
+			);
+		});
+	};
+
+	const showCreateDataEntry = () => {
+		setCreateDataEntryVisible(true);
+		setDataDisplayVisible(false);
+		setResultsVisible(false);
 		setFTANumber("");
 		setFTARevision("");
 		setTestFixture("");
@@ -109,24 +109,11 @@ function App() {
 		setPartDescription("");
 	};
 
-	const deleteDataEntry = (id) => {
-		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
-			setDataList(
-				dataList.filter((val) => {
-					return val.id != id;
-				})
-			);
-		});
-	};
-
-	const showDeleteModal = () => {
-		setDeleteVisible(true);
-		setDeleteBackgroundVisible(true);
-	};
-
-	const noDelete = () => {
-		setDeleteVisible(false);
-		setDeleteBackgroundVisible(false);
+	const showSearch = () => {
+		setResultsVisible(true);
+		setCreateDataEntryVisible(false);
+		setDataDisplayVisible(false);
+		setDisplaySearchOperator(searchOperator);
 	};
 
 	return (
@@ -141,15 +128,14 @@ function App() {
 							<input
 								autoComplete="off"
 								style={{ paddingLeft: "3px" }}
-								value={searchOperator}
 								onChange={(e) => setSearchOperator(e.target.value)}
 							></input>
-							<button onClick={nowSearching}>Search</button>
+							<button onClick={showSearch}>Search</button>
 						</div>
 					</div>
 				</div>
 				<div class="moreButtons">
-					<button onClick={showCreatePanel}>Create Data Entry</button>
+					<button onClick={showCreateDataEntry}>Create Data Entry</button>
 					<button onClick={getData}>Display All Data Entries</button>
 				</div>
 			</div>
@@ -157,7 +143,7 @@ function App() {
 			{/*area for adding a data entry*/}
 			<div
 				class="addingEntry"
-				style={{ display: createVisible ? "block" : "none" }}
+				style={{ display: createDataEntryVisible ? "block" : "none" }}
 			>
 				<h2>Create Data Entry:</h2>
 				<p class="line1"></p>
@@ -244,49 +230,24 @@ function App() {
 					</div>
 				</div>
 			</div>
-			{/*area for displaying data entries*/}
 
+			{/*area for displaying data entries*/}
 			<div
 				class="dataDisplay"
-				style={{ display: allDataVisible ? "block" : "none" }}
+				style={{ display: dataDisplayVisible ? "block" : "none" }}
 			>
 				<h2>Data Display:</h2>
 				<p class="line2"></p>
 
-				<div
-					class="deleteModalBackground"
-					style={{ display: deleteBackgroundVisible ? "block" : "none" }}
-				></div>
 				{dataList.map((val, key) => {
 					return (
-						<div class="oneEntry">
-							<div class="dataBox">
+						<div class="dataBox">
+							<div class="oneEntry">
 								<div class="topButtons">
-									<button onClick={showDeleteModal}>Delete Data Entry</button>
+									<button onClick={() => deleteData(val.id)}>
+										Delete Data Entry
+									</button>
 									<button>Edit Data Entry</button>
-								</div>
-								{/*modal for deleting an existing data entry*/}
-								<div
-									class="deleteExistingEntry"
-									style={{ display: deleteVisible ? "block" : "none" }}
-								>
-									<div class="deleteExistingEntryContent">
-										<h3>
-											Are you sure that you want to delete this data entry?
-											Deleting this data entry will remove it from the database.
-										</h3>
-										<button onClick={noDelete}>No</button>
-										<button
-											onClick={() => {
-												setDeleteBackgroundVisible(false);
-												setSaveConfirmVisible(true);
-												setDeleteVisible(false);
-												deleteDataEntry(val.id);
-											}}
-										>
-											Yes
-										</button>
-									</div>
 								</div>
 								<h4>FTA Number:</h4>
 								<div class="value">
@@ -330,12 +291,12 @@ function App() {
 				})}
 			</div>
 
-			{/*search display*/}
+			{/*create the results display*/}
 			<div
 				class="searchScreen"
-				style={{ display: searchScreenVisible ? "block" : "none" }}
+				style={{ display: resultsVisible ? "block" : "none" }}
 			>
-				<h2>Search Results for "{searchOperatorDisplay}":</h2>
+				<h2>Showing Results for "{displaySearchOperator}":</h2>
 				<p class="line3"></p>
 			</div>
 
@@ -355,15 +316,14 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for confirming saved changes*/}
+			{/*modal confirming the changes have been made*/}
 			<div
 				class="saveConfirm"
 				style={{ display: saveConfirmVisible ? "block" : "none" }}
 			>
 				<div class="saveConfirmContent">
 					<h3>
-						Your changes have been saved, and the database has been updated with
-						the saved changes.
+						Your changes have been saved and the database has been updated.
 					</h3>
 					<button onClick={() => setSaveConfirmVisible(false)}>
 						Return to Main Display
@@ -371,7 +331,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal confirming cancelling changes on the create data entry display */}
+			{/*modal for cancelling changes made on add entry display*/}
 			<div
 				class="cancelAdd"
 				style={{ display: cancelAddVisible ? "block" : "none" }}

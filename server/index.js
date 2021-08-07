@@ -58,7 +58,7 @@ app.get("/data", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
 	const id = req.params.id;
-	db.query("DELETE FROM data WHERE id= ?", id, (err, result) => {
+	db.query("DELETE FROM data WHERE id = ?", id, (err, result) => {
 		if (err) {
 			console.log(err);
 		} else {

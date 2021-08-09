@@ -133,6 +133,8 @@ function App() {
 								autoComplete="off"
 								style={{ paddingLeft: "3px" }}
 								onChange={(e) => setSearchOperator(e.target.value)}
+								placeholder="FTA Number"
+								type="number"
 							></input>
 							<button onClick={showSearch}>Search</button>
 						</div>
@@ -306,7 +308,7 @@ function App() {
 				class="searchScreen"
 				style={{ display: resultsVisible ? "block" : "none" }}
 			>
-				<h2>Showing Results for "{displaySearchOperator}":</h2>
+				<h2>Showing Results for FTA Number "{displaySearchOperator}":</h2>
 				<p class="line3"></p>
 			</div>
 

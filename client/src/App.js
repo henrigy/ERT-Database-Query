@@ -23,6 +23,7 @@ function App() {
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
 	const [buttonID, setButtonID] = useState("");
+	const [nothing] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -83,6 +84,21 @@ function App() {
 		});
 	};
 
+	const getSearch = () => {
+		setResultsVisible(true);
+		setCreateDataEntryVisible(false);
+		setDataDisplayVisible(false);
+		setDisplaySearchOperator(searchOperator);
+
+		Axios.get("http://localhost:3002/search").then((response) => {
+			setDataList(
+				dataList.filter((val) => {
+					return val.FTANumber === searchOperator;
+				})
+			);
+		});
+	};
+
 	const deleteData = (id) => {
 		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
 			setDataList(
@@ -107,13 +123,6 @@ function App() {
 		setPartDescription("");
 	};
 
-	const showSearch = () => {
-		setResultsVisible(true);
-		setCreateDataEntryVisible(false);
-		setDataDisplayVisible(false);
-		setDisplaySearchOperator(searchOperator);
-	};
-
 	const deleteEntry = () => {
 		setDeletingEntryVisible(false);
 		deleteData(buttonID);
@@ -136,7 +145,7 @@ function App() {
 								placeholder="FTA Number"
 								type="number"
 							></input>
-							<button onClick={showSearch}>Search</button>
+							<button onClick={getSearch}>Search</button>
 						</div>
 					</div>
 				</div>
@@ -310,6 +319,62 @@ function App() {
 			>
 				<h2>Showing Results for FTA Number "{displaySearchOperator}":</h2>
 				<p class="line3"></p>
+				{dataList.map((val, key) => {
+					return (
+						<div class="dataBox">
+							<div class="oneEntry">
+								<div class="topButtons">
+									<button
+										onClick={() => {
+											setDeletingEntryVisible(true);
+											setButtonID(val.id);
+										}}
+									>
+										Delete Data Entry
+									</button>
+
+									<button>Edit Data Entry</button>
+								</div>
+								<h4>FTA Number:</h4>
+								<div class="value">
+									<h5>{val.FTANumber}</h5>
+								</div>
+								<h4>FTA Revision:</h4>
+								<div class="value">
+									<h5>{val.FTARevision}</h5>
+								</div>
+								<h4>Test Fixture:</h4>{" "}
+								<div class="value">
+									<h5>{val.testFixture}</h5>
+								</div>
+								<h4>Reference(s):</h4>{" "}
+								<div class="value">
+									<h5>{val.reference}</h5>
+								</div>
+								<h4>Part Number:</h4>{" "}
+								<div class="value">
+									<h5>{val.partNumber}</h5>
+								</div>
+								<h4>Part Revision:</h4>{" "}
+								<div class="value">
+									<h5>{val.partRevision}</h5>
+								</div>
+								<h4>APN Number:</h4>{" "}
+								<div class="value">
+									<h5>{val.APNNumber}</h5>
+								</div>
+								<h4>Part Description:</h4>{" "}
+								<div class="value">
+									<h5>{val.partDescription}</h5>
+								</div>
+								<div class="bottomButtons">
+									<button>Cancel Changes</button>
+									<button>Save Changes</button>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 
 			{/*creating the modals*/}

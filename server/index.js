@@ -67,6 +67,16 @@ app.delete("/delete/:id", (req, res) => {
 	});
 });
 
+app.get("/search", (req, res) => {
+	db.query("SELECT * FROM data", (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.send(result);
+		}
+	});
+});
+
 app.listen(3002, () => {
 	console.log("Your server is running on port 3002.");
 });

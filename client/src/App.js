@@ -23,7 +23,6 @@ function App() {
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
 	const [buttonID, setButtonID] = useState("");
-	const [nothing] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -91,9 +90,10 @@ function App() {
 		setDisplaySearchOperator(searchOperator);
 
 		Axios.get("http://localhost:3002/search").then((response) => {
+			setDataList(response.data);
 			setDataList(
 				dataList.filter((val) => {
-					return val.FTANumber === searchOperator;
+					return val.FTANumber === displaySearchOperator;
 				})
 			);
 		});

@@ -24,6 +24,8 @@ function App() {
 	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
 	const [buttonID, setButtonID] = useState("");
 	const [editButtonPressed, setEditButtonPressed] = useState(false);
+	const [cancelEditVisible, setCancelEditVisible] = useState(false);
+	const [saveEditVisible, setSaveEditVisible] = useState(false);
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -463,14 +465,63 @@ function App() {
 						<h4>Part Description</h4>
 						<input></input>
 						<div class="bottomButtons">
-							<button onClick={() => setEditButtonPressed(false)}>
+							<button
+								onClick={() => {
+									setCancelEditVisible(true);
+								}}
+							>
 								Cancel Changes
 							</button>
-							<button onClick={() => setEditButtonPressed(false)}>
+							<button onClick={() => setSaveEditVisible(true)}>
 								Save Changes
 							</button>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			{/*modal for cancelling edits made to a data entry*/}
+			<div
+				class="cancelEdits"
+				style={{ display: cancelEditVisible ? "block" : "none" }}
+			>
+				<div class="cancelEditsContent">
+					<h3>
+						Are you sure that you want to cancel the edits made? Cancelling will
+						reset all changes.
+					</h3>
+					<button onClick={() => setCancelEditVisible(false)}>No</button>
+					<button
+						onClick={() => {
+							setCancelEditVisible(false);
+							setEditButtonPressed(false);
+						}}
+					>
+						Yes
+					</button>
+				</div>
+			</div>
+
+			{/*modal for saving the edits made to a data entry*/}
+			<div
+				class="saveEdits"
+				style={{ display: saveEditVisible ? "block" : "none" }}
+			>
+				<div class="saveEditsContent">
+					<h3>
+						Are you sure that you want to save the edits made to this data
+						entry? Saving this data entry will update the database.
+					</h3>
+					<button onClick={() => setSaveEditVisible(false)}>No</button>
+					<button
+						onClick={() => {
+							setSaveEditVisible(false);
+							setEditButtonPressed(false);
+							setSaveConfirmVisible(true);
+						}}
+					>
+						Yes
+					</button>
 				</div>
 			</div>
 		</div>

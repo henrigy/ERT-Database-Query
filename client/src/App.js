@@ -88,7 +88,6 @@ function App() {
 		setCreateDataEntryVisible(false);
 		setDataDisplayVisible(false);
 		setDisplaySearchOperator(searchOperator);
-		console.log(searchOperator);
 
 		Axios.get(`http://localhost:3002/search/${searchOperator}`).then(
 			(response) => {

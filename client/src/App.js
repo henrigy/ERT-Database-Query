@@ -23,6 +23,7 @@ function App() {
 	const [cancelAddVisible, setCancelAddVisible] = useState(false);
 	const [deletingEntryVisible, setDeletingEntryVisible] = useState(false);
 	const [buttonID, setButtonID] = useState("");
+	const [editButtonPressed, setEditButtonPressed] = useState(false);
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -265,7 +266,9 @@ function App() {
 										Delete Data Entry
 									</button>
 
-									<button>Edit Data Entry</button>
+									<button onClick={() => setEditButtonPressed(true)}>
+										Edit Data Entry
+									</button>
 								</div>
 								<h4>FTA Number:</h4>
 								<div class="value">
@@ -298,10 +301,6 @@ function App() {
 								<h4>Part Description:</h4>{" "}
 								<div class="value">
 									<h5>{val.partDescription}</h5>
-								</div>
-								<div class="bottomButtons">
-									<button>Cancel Changes</button>
-									<button>Save Changes</button>
 								</div>
 							</div>
 						</div>
@@ -330,7 +329,9 @@ function App() {
 										Delete Data Entry
 									</button>
 
-									<button>Edit Data Entry</button>
+									<button onClick={() => setEditButtonPressed(true)}>
+										Edit Data Entry
+									</button>
 								</div>
 								<h4>FTA Number:</h4>
 								<div class="value">
@@ -363,10 +364,6 @@ function App() {
 								<h4>Part Description:</h4>{" "}
 								<div class="value">
 									<h5>{val.partDescription}</h5>
-								</div>
-								<div class="bottomButtons">
-									<button>Cancel Changes</button>
-									<button>Save Changes</button>
 								</div>
 							</div>
 						</div>
@@ -434,6 +431,46 @@ function App() {
 						Cancel Delete
 					</button>
 					<button onClick={deleteEntry}>Delete Entry</button>
+				</div>
+			</div>
+
+			{/*modal for editing a data entry*/}
+			<div
+				class="editingEntry"
+				style={{
+					display: editButtonPressed ? "block" : "none",
+				}}
+			>
+				<div class="editingEntryContent">
+					<h2>Editing Data Entry for FTA Number ""</h2>
+					<p class="line4"></p>
+
+					<div class="editBox">
+						<h4>FTA Number: </h4>
+						<input></input>
+						<h4>FTA Revision: </h4>
+						<input></input>
+						<h4>Test Fixture: </h4>
+						<input></input>
+						<h4>Reference(s):</h4>
+						<input></input>
+						<h4>Part Number:</h4>
+						<input></input>
+						<h4>Part Revision:</h4>
+						<input></input>
+						<h4>APN Number:</h4>
+						<input></input>
+						<h4>Part Description</h4>
+						<input></input>
+						<div class="bottomButtons">
+							<button onClick={() => setEditButtonPressed(false)}>
+								Cancel Changes
+							</button>
+							<button onClick={() => setEditButtonPressed(false)}>
+								Save Changes
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

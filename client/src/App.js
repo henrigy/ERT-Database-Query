@@ -27,6 +27,7 @@ function App() {
 	const [cancelEditVisible, setCancelEditVisible] = useState(false);
 	const [saveEditVisible, setSaveEditVisible] = useState(false);
 	const [nothing] = useState("");
+	const [missingFTAVisible, setMissingFTAVisible] = useState(false);
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -241,7 +242,15 @@ function App() {
 						<button onClick={() => setCancelAddVisible(true)}>
 							Cancel Data Entry
 						</button>
-						<button onClick={() => setSaveAddedEntryVisible(true)}>
+						<button
+							onClick={() => {
+								if (FTANumber !== nothing) {
+									setSaveAddedEntryVisible(true);
+								} else {
+									setMissingFTAVisible(true);
+								}
+							}}
+						>
 							Save Data Entry
 						</button>
 					</div>
@@ -317,7 +326,7 @@ function App() {
 				class="searchScreen"
 				style={{ display: resultsVisible ? "block" : "none" }}
 			>
-				<h2>Showing Results for FTA Number "{displaySearchOperator}":</h2>
+				<h2>Results for FTA Number "{displaySearchOperator}":</h2>
 				<p class="line3"></p>
 
 				{dataList.map((val, key) => {
@@ -526,6 +535,22 @@ function App() {
 						}}
 					>
 						Yes
+					</button>
+				</div>
+			</div>
+
+			{/*modal for empty FTANumber field*/}
+			<div
+				class="missingFTA"
+				style={{ display: missingFTAVisible ? "block" : "none" }}
+			>
+				<div class="missingFTAContent">
+					<h3>
+						There is no value inputted for "FTA Number". This field cannot be
+						left be blank.
+					</h3>
+					<button onClick={() => setMissingFTAVisible(false)}>
+						Return to Editing
 					</button>
 				</div>
 			</div>

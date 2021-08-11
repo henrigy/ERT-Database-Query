@@ -29,6 +29,15 @@ function App() {
 	const [nothing] = useState("");
 	const [missingFTAVisible, setMissingFTAVisible] = useState(false);
 
+	const [editFTANumber, setEditFTANumber] = useState("");
+	const [editFTARevision, setEditFTARevision] = useState("");
+	const [editTestFixture, setEditTestFixture] = useState("");
+	const [editReference, setEditReference] = useState("");
+	const [editPartNumber, setEditPartNumber] = useState("");
+	const [editPartRevision, setEditPartRevision] = useState("");
+	const [editAPNNumber, setEditAPNNumber] = useState("");
+	const [editPartDescription, setEditPartDescription] = useState("");
+
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
 		setSaveConfirmVisible(true);
@@ -279,7 +288,20 @@ function App() {
 										Delete Data Entry
 									</button>
 
-									<button onClick={() => setEditButtonPressed(true)}>
+									<button
+										onClick={() => {
+											setEditFTANumber(val.FTANumber);
+											setEditFTARevision(val.FTARevision);
+											setEditTestFixture(val.testFixture);
+											setEditReference(val.reference);
+											setEditPartNumber(val.partNumber);
+											setEditPartRevision(val.partRevision);
+											setEditAPNNumber(val.APNNumber);
+											setEditPartDescription(val.partDescription);
+
+											setEditButtonPressed(true);
+										}}
+									>
 										Edit Data Entry
 									</button>
 								</div>
@@ -344,7 +366,20 @@ function App() {
 											Delete Data Entry
 										</button>
 
-										<button onClick={() => setEditButtonPressed(true)}>
+										<button
+											onClick={() => {
+												setEditFTANumber(val.FTANumber);
+												setEditFTARevision(val.FTARevision);
+												setEditTestFixture(val.testFixture);
+												setEditReference(val.reference);
+												setEditPartNumber(val.partNumber);
+												setEditPartRevision(val.partRevision);
+												setEditAPNNumber(val.APNNumber);
+												setEditPartDescription(val.partDescription);
+
+												setEditButtonPressed(true);
+											}}
+										>
 											Edit Data Entry
 										</button>
 									</div>
@@ -458,26 +493,26 @@ function App() {
 				}}
 			>
 				<div class="editingEntryContent">
-					<h2>Editing Data Entry for FTA Number ""</h2>
+					<h2>Editing Data Entry for FTA Number "{editFTANumber}"</h2>
 					<p class="line4"></p>
 
 					<div class="editBox">
 						<h4>FTA Number: </h4>
-						<input></input>
+						<input value={editFTANumber} />
 						<h4>FTA Revision: </h4>
-						<input></input>
+						<input value={editFTARevision} />
 						<h4>Test Fixture: </h4>
-						<input></input>
+						<input value={editTestFixture} />
 						<h4>Reference(s):</h4>
-						<input></input>
+						<input value={editReference} />
 						<h4>Part Number:</h4>
-						<input></input>
+						<input value={editPartNumber} />
 						<h4>Part Revision:</h4>
-						<input></input>
+						<input value={editPartRevision} />
 						<h4>APN Number:</h4>
-						<input></input>
+						<input value={editAPNNumber} />
 						<h4>Part Description</h4>
-						<input></input>
+						<input value={editPartDescription} />
 						<div class="bottomButtons">
 							<button
 								onClick={() => {

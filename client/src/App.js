@@ -26,6 +26,7 @@ function App() {
 	const [editButtonPressed, setEditButtonPressed] = useState(false);
 	const [cancelEditVisible, setCancelEditVisible] = useState(false);
 	const [saveEditVisible, setSaveEditVisible] = useState(false);
+	const [nothing] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -91,6 +92,7 @@ function App() {
 		setCreateDataEntryVisible(false);
 		setDataDisplayVisible(false);
 		setDisplaySearchOperator(searchOperator);
+		console.log(searchOperator);
 
 		Axios.get(`http://localhost:3002/search/${searchOperator}`).then(
 			(response) => {
@@ -317,59 +319,62 @@ function App() {
 			>
 				<h2>Showing Results for FTA Number "{displaySearchOperator}":</h2>
 				<p class="line3"></p>
-				{dataList.map((val, key) => {
-					return (
-						<div class="dataBox">
-							<div class="oneEntry">
-								<div class="topButtons">
-									<button
-										onClick={() => {
-											setDeletingEntryVisible(true);
-											setButtonID(val.id);
-										}}
-									>
-										Delete Data Entry
-									</button>
 
-									<button onClick={() => setEditButtonPressed(true)}>
-										Edit Data Entry
-									</button>
-								</div>
-								<h4>FTA Number:</h4>
-								<div class="value">
-									<h5>{val.FTANumber}</h5>
-								</div>
-								<h4>FTA Revision:</h4>
-								<div class="value">
-									<h5>{val.FTARevision}</h5>
-								</div>
-								<h4>Test Fixture:</h4>{" "}
-								<div class="value">
-									<h5>{val.testFixture}</h5>
-								</div>
-								<h4>Reference(s):</h4>{" "}
-								<div class="value">
-									<h5>{val.reference}</h5>
-								</div>
-								<h4>Part Number:</h4>{" "}
-								<div class="value">
-									<h5>{val.partNumber}</h5>
-								</div>
-								<h4>Part Revision:</h4>{" "}
-								<div class="value">
-									<h5>{val.partRevision}</h5>
-								</div>
-								<h4>APN Number:</h4>{" "}
-								<div class="value">
-									<h5>{val.APNNumber}</h5>
-								</div>
-								<h4>Part Description:</h4>{" "}
-								<div class="value">
-									<h5>{val.partDescription}</h5>
+				{dataList.map((val, key) => {
+					if (displaySearchOperator !== nothing) {
+						return (
+							<div class="dataBox">
+								<div class="oneEntry">
+									<div class="topButtons">
+										<button
+											onClick={() => {
+												setDeletingEntryVisible(true);
+												setButtonID(val.id);
+											}}
+										>
+											Delete Data Entry
+										</button>
+
+										<button onClick={() => setEditButtonPressed(true)}>
+											Edit Data Entry
+										</button>
+									</div>
+									<h4>FTA Number:</h4>
+									<div class="value">
+										<h5>{val.FTANumber}</h5>
+									</div>
+									<h4>FTA Revision:</h4>
+									<div class="value">
+										<h5>{val.FTARevision}</h5>
+									</div>
+									<h4>Test Fixture:</h4>{" "}
+									<div class="value">
+										<h5>{val.testFixture}</h5>
+									</div>
+									<h4>Reference(s):</h4>{" "}
+									<div class="value">
+										<h5>{val.reference}</h5>
+									</div>
+									<h4>Part Number:</h4>{" "}
+									<div class="value">
+										<h5>{val.partNumber}</h5>
+									</div>
+									<h4>Part Revision:</h4>{" "}
+									<div class="value">
+										<h5>{val.partRevision}</h5>
+									</div>
+									<h4>APN Number:</h4>{" "}
+									<div class="value">
+										<h5>{val.APNNumber}</h5>
+									</div>
+									<h4>Part Description:</h4>{" "}
+									<div class="value">
+										<h5>{val.partDescription}</h5>
+									</div>
 								</div>
 							</div>
-						</div>
-					);
+						);
+					}
 				})}
 			</div>
 

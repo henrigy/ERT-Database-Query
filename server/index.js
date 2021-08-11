@@ -67,14 +67,19 @@ app.delete("/delete/:id", (req, res) => {
 	});
 });
 
-app.get("/search", (req, res) => {
-	db.query("SELECT * FROM data", (err, result) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.send(result);
+app.get("/search/:displaySearchOperator", (req, res) => {
+	const displaySearchOperator = req.params.displaySearchOperator;
+	db.query(
+		"SELECT * FROM data WHERE FTANumber = ? ",
+		displaySearchOperator,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
 		}
-	});
+	);
 });
 
 app.listen(3002, () => {

@@ -88,15 +88,13 @@ function App() {
 		setCreateDataEntryVisible(false);
 		setDataDisplayVisible(false);
 		setDisplaySearchOperator(searchOperator);
+		console.log(searchOperator);
 
-		Axios.get("http://localhost:3002/search").then((response) => {
-			setDataList(response.data);
-			setDataList(
-				dataList.filter((val) => {
-					return val.FTANumber === displaySearchOperator;
-				})
-			);
-		});
+		Axios.get(`http://localhost:3002/search/${searchOperator}`).then(
+			(response) => {
+				setDataList(response.data);
+			}
+		);
 	};
 
 	const deleteData = (id) => {

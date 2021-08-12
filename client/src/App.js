@@ -571,7 +571,15 @@ function App() {
 							>
 								Cancel Changes
 							</button>
-							<button onClick={() => setSaveEditVisible(true)}>
+							<button
+								onClick={() => {
+									if (editFTANumber !== nothing) {
+										setSaveEditVisible(true);
+									} else {
+										setMissingFTAVisible(true);
+									}
+								}}
+							>
 								Save Changes
 							</button>
 						</div>

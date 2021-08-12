@@ -37,6 +37,7 @@ function App() {
 	const [editAPNNumber, setEditAPNNumber] = useState("");
 	const [editPartDescription, setEditPartDescription] = useState("");
 	const [editDisplayFTANumber, setEditDisplayFTANumber] = useState("");
+	const [editID, setEditID] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -139,6 +140,39 @@ function App() {
 		setDeletingEntryVisible(false);
 		deleteData(buttonID);
 		setSaveConfirmVisible(true);
+	};
+
+	const updateData = (id) => {
+		Axios.put("http://localhost:3002/update", {
+			newFTANumber: editFTANumber,
+			newFTARevision: editFTARevision,
+			newTestFixture: editTestFixture,
+			newReference: editReference,
+			newPartNumber: editPartNumber,
+			newPartRevision: editPartRevision,
+			newAPNNumber: editAPNNumber,
+			newPartDescription: editPartDescription,
+
+			id: id,
+		}).then((response) => {
+			setDataList(
+				dataList.map((val) => {
+					return val.id === id
+						? {
+								id: val.id,
+								FTANumber: editFTANumber,
+								FTARevision: editFTARevision,
+								testFixture: editTestFixture,
+								reference: editReference,
+								partNumber: editPartNumber,
+								partRevision: editPartRevision,
+								APNNumber: editAPNNumber,
+								partDescription: editPartDescription,
+						  }
+						: val;
+				})
+			);
+		});
 	};
 
 	return (
@@ -290,6 +324,7 @@ function App() {
 
 									<button
 										onClick={() => {
+											setEditID(val.id);
 											setEditDisplayFTANumber(val.FTANumber);
 											setEditFTANumber(val.FTANumber);
 											setEditFTARevision(val.FTARevision);
@@ -369,6 +404,7 @@ function App() {
 
 										<button
 											onClick={() => {
+												setEditID(val.id);
 												setEditDisplayFTANumber(val.FTANumber);
 												setEditFTANumber(val.FTANumber);
 												setEditFTARevision(val.FTARevision);
@@ -625,6 +661,7 @@ function App() {
 							setSaveEditVisible(false);
 							setEditButtonPressed(false);
 							setSaveConfirmVisible(true);
+							updateData(editID);
 						}}
 					>
 						Yes

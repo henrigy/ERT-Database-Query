@@ -82,6 +82,40 @@ app.get("/search/:displaySearchOperator", (req, res) => {
 	);
 });
 
+app.put("/update", (req, res) => {
+	const id = req.body.id;
+	const newFTANumber = req.body.newFTANumber;
+	const newFTARevision = req.body.newFTARevision;
+	const newTestFixture = req.body.newTestFixture;
+	const newReference = req.body.newReference;
+	const newPartNumber = req.body.newPartNumber;
+	const newPartRevision = req.body.newPartRevision;
+	const newAPNNumber = req.body.newAPNNumber;
+	const newPartDescription = req.body.newPartDescription;
+
+	db.query(
+		"UPDATE data SET FTANumber = ?, FTARevision = ?, testFixture =?, reference =?, partNumber = ?, partRevision = ?, APNNumber = ?, partDescription = ? WHERE id = ?",
+		[
+			newFTANumber,
+			newFTARevision,
+			newTestFixture,
+			newReference,
+			newPartNumber,
+			newPartRevision,
+			newAPNNumber,
+			newPartDescription,
+			id,
+		],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+
 app.listen(3002, () => {
 	console.log("Your server is running on port 3002.");
 });

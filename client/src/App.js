@@ -28,7 +28,6 @@ function App() {
 	const [saveEditVisible, setSaveEditVisible] = useState(false);
 	const [nothing] = useState("");
 	const [missingFTAVisible, setMissingFTAVisible] = useState(false);
-
 	const [editFTANumber, setEditFTANumber] = useState("");
 	const [editFTARevision, setEditFTARevision] = useState("");
 	const [editTestFixture, setEditTestFixture] = useState("");
@@ -37,6 +36,7 @@ function App() {
 	const [editPartRevision, setEditPartRevision] = useState("");
 	const [editAPNNumber, setEditAPNNumber] = useState("");
 	const [editPartDescription, setEditPartDescription] = useState("");
+	const [editDisplayFTANumber, setEditDisplayFTANumber] = useState("");
 
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
@@ -290,6 +290,7 @@ function App() {
 
 									<button
 										onClick={() => {
+											setEditDisplayFTANumber(val.FTANumber);
 											setEditFTANumber(val.FTANumber);
 											setEditFTARevision(val.FTARevision);
 											setEditTestFixture(val.testFixture);
@@ -368,6 +369,7 @@ function App() {
 
 										<button
 											onClick={() => {
+												setEditDisplayFTANumber(val.FTANumber);
 												setEditFTANumber(val.FTANumber);
 												setEditFTARevision(val.FTARevision);
 												setEditTestFixture(val.testFixture);
@@ -493,26 +495,74 @@ function App() {
 				}}
 			>
 				<div class="editingEntryContent">
-					<h2>Editing Data Entry for FTA Number "{editFTANumber}"</h2>
+					<h2>Editing Data Entry for FTA Number "{editDisplayFTANumber}"</h2>
 					<p class="line4"></p>
 
 					<div class="editBox">
 						<h4>FTA Number: </h4>
-						<input value={editFTANumber} />
+						<input
+							type="number"
+							value={editFTANumber}
+							onChange={(event) => {
+								setEditFTANumber(event.target.value);
+							}}
+						/>
 						<h4>FTA Revision: </h4>
-						<input value={editFTARevision} />
+						<input
+							type="number"
+							value={editFTARevision}
+							onChange={(event) => {
+								setEditFTARevision(event.target.value);
+							}}
+						/>
 						<h4>Test Fixture: </h4>
-						<input value={editTestFixture} />
+						<input
+							type="text"
+							value={editTestFixture}
+							onChange={(event) => {
+								setEditTestFixture(event.target.value);
+							}}
+						/>
 						<h4>Reference(s):</h4>
-						<input value={editReference} />
+						<input
+							type="text"
+							value={editReference}
+							onChange={(event) => {
+								setEditReference(event.target.value);
+							}}
+						/>
 						<h4>Part Number:</h4>
-						<input value={editPartNumber} />
+						<input
+							type="text"
+							value={editPartNumber}
+							onChange={(event) => {
+								setEditPartNumber(event.target.value);
+							}}
+						/>
 						<h4>Part Revision:</h4>
-						<input value={editPartRevision} />
+						<input
+							type="text"
+							value={editPartRevision}
+							onChange={(event) => {
+								setEditPartRevision(event.target.value);
+							}}
+						/>
 						<h4>APN Number:</h4>
-						<input value={editAPNNumber} />
+						<input
+							type="number"
+							value={editAPNNumber}
+							onChange={(event) => {
+								setEditAPNNumber(event.target.value);
+							}}
+						/>
 						<h4>Part Description</h4>
-						<input value={editPartDescription} />
+						<input
+							type="text"
+							value={editPartDescription}
+							onChange={(event) => {
+								setEditPartDescription(event.target.value);
+							}}
+						/>
 						<div class="bottomButtons">
 							<button
 								onClick={() => {

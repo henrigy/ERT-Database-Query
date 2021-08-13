@@ -4,6 +4,7 @@ import { useState } from "react";
 import Axios from "axios";
 
 function App() {
+	//state hooks for storing the data entry values
 	const [FTANumber, setFTANumber] = useState("");
 	const [FTARevision, setFTARevision] = useState("");
 	const [testFixture, setTestFixture] = useState("");
@@ -13,6 +14,8 @@ function App() {
 	const [APNNumber, setAPNNumber] = useState("");
 	const [partDescription, setPartDescription] = useState("");
 	const [dataList, setDataList] = useState([]);
+
+	//state hooks for modals and button presses
 	const [createDataEntryVisible, setCreateDataEntryVisible] = useState(false);
 	const [dataDisplayVisible, setDataDisplayVisible] = useState(false);
 	const [resultsVisible, setResultsVisible] = useState(false);
@@ -28,6 +31,8 @@ function App() {
 	const [saveEditVisible, setSaveEditVisible] = useState(false);
 	const [nothing] = useState("");
 	const [missingFTAVisible, setMissingFTAVisible] = useState(false);
+
+	//state hooks for editing the data entry values
 	const [editFTANumber, setEditFTANumber] = useState("");
 	const [editFTARevision, setEditFTARevision] = useState("");
 	const [editTestFixture, setEditTestFixture] = useState("");
@@ -39,6 +44,8 @@ function App() {
 	const [editDisplayFTANumber, setEditDisplayFTANumber] = useState("");
 	const [editID, setEditID] = useState("");
 
+	//AXIOS REQUESTS AND REPONSES
+	//Axios response to creating and saving a new data entry and updating the frontend display to reflect changes immediately
 	const addData = () => {
 		setSaveAddedEntryVisible(false);
 		setSaveConfirmVisible(true);
@@ -77,18 +84,7 @@ function App() {
 		});
 	};
 
-	const resetValues = () => {
-		setCancelAddVisible(false);
-		setFTANumber("");
-		setFTARevision("");
-		setTestFixture("");
-		setReference("");
-		setPartNumber("");
-		setPartRevision("");
-		setAPNNumber("");
-		setPartDescription("");
-	};
-
+	//Axios fetch request to display all data entries within the database
 	const getData = () => {
 		setCreateDataEntryVisible(false);
 		setDataDisplayVisible(true);
@@ -98,6 +94,7 @@ function App() {
 		});
 	};
 
+	//Axios fetch request to display all data entries within the database for a given search operator
 	const getSearch = () => {
 		setResultsVisible(true);
 		setCreateDataEntryVisible(false);
@@ -112,6 +109,7 @@ function App() {
 		);
 	};
 
+	//Axios reponse to deleting a data entry and updating the frontend display to reflect changes immediately
 	const deleteData = (id) => {
 		Axios.delete(`http://localhost:3002/delete/${id}`).then((response) => {
 			setDataList(
@@ -122,26 +120,7 @@ function App() {
 		});
 	};
 
-	const showCreateDataEntry = () => {
-		setCreateDataEntryVisible(true);
-		setDataDisplayVisible(false);
-		setResultsVisible(false);
-		setFTANumber("");
-		setFTARevision("");
-		setTestFixture("");
-		setReference("");
-		setPartNumber("");
-		setPartRevision("");
-		setAPNNumber("");
-		setPartDescription("");
-	};
-
-	const deleteEntry = () => {
-		setDeletingEntryVisible(false);
-		deleteData(buttonID);
-		setSaveConfirmVisible(true);
-	};
-
+	//Axios response to editing a data entry and updating the frontend display to reflect changes immediately
 	const updateData = (id) => {
 		Axios.put("http://localhost:3002/update", {
 			newFTANumber: editFTANumber,
@@ -175,10 +154,48 @@ function App() {
 		});
 	};
 
+	//UI/UX FUNCTIONS
+	//reset new data entry fields after cancelling the process
+	const resetValues = () => {
+		setCancelAddVisible(false);
+		setFTANumber("");
+		setFTARevision("");
+		setTestFixture("");
+		setReference("");
+		setPartNumber("");
+		setPartRevision("");
+		setAPNNumber("");
+		setPartDescription("");
+	};
+
+	//displays "Create Data Entry:" screen with blank input fields
+	const showCreateDataEntry = () => {
+		setCreateDataEntryVisible(true);
+		setDataDisplayVisible(false);
+		setResultsVisible(false);
+		setFTANumber("");
+		setFTARevision("");
+		setTestFixture("");
+		setReference("");
+		setPartNumber("");
+		setPartRevision("");
+		setAPNNumber("");
+		setPartDescription("");
+	};
+
+	//hides the modal confirming the decision to delete a data entry, deletes the selected entry, and shows the modal confirming that the database has been updated
+	const deleteEntry = () => {
+		setDeletingEntryVisible(false);
+		deleteData(buttonID);
+		setSaveConfirmVisible(true);
+	};
+
 	return (
 		<div class="App">
 			<Banner />
-			{/*area for search bar, add entry button, & display all entries button*/}
+
+			{/*"SEARCH AREA" DISPLAY*/}
+			{/*search input, "Search" button, "Create Data Entry" button, and "Display All Data Entries" button*/}
 			<div class="searchArea">
 				<div class="topRow">
 					<h2>PVGS Electronic Rework Team Query</h2>
@@ -201,7 +218,8 @@ function App() {
 				</div>
 			</div>
 
-			{/*area for adding a data entry*/}
+			{/*"CREATE DATA ENTRY" DISPLAY*/}
+			{/*Inputs for creating a data entry's FTA Number, FTA Revision, Test Fixture, Reference(s), Part Number, Part Revision, APN Number, and Part Description, "Cancel Data Entry" button, and "Save Data" Entry*/}
 			<div
 				class="addingEntry"
 				style={{ display: createDataEntryVisible ? "block" : "none" }}
@@ -300,7 +318,8 @@ function App() {
 				</div>
 			</div>
 
-			{/*area for displaying data entries*/}
+			{/*"DISPLAY ALL DATA ENTRIES" DISPLAY*/}
+			{/*displaying all data entries in the database, "Delete Data Entry" button, and "Edit Data Entry" button*/}
 			<div
 				class="dataDisplay"
 				style={{ display: dataDisplayVisible ? "block" : "none" }}
@@ -379,7 +398,8 @@ function App() {
 				})}
 			</div>
 
-			{/*create the results display*/}
+			{/*"RESULTS FOR FTA NUMBER '###'" DISPLAY*/}
+			{/*displays data entries with FTA Numbers that match the search operator, "Delete Data Entry" button, and "Edit Data Entry" button*/}
 			<div
 				class="searchScreen"
 				style={{ display: resultsVisible ? "block" : "none" }}
@@ -460,8 +480,8 @@ function App() {
 				})}
 			</div>
 
-			{/*creating the modals*/}
-			{/*modal for saving an added data entry */}
+			{/*MODALS*/}
+			{/*modal confirming that the user wants to save the created data entry*/}
 			<div
 				class="saveAddedEntry"
 				style={{ display: saveAddedEntryVisible ? "block" : "none" }}
@@ -476,7 +496,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal confirming the changes have been made*/}
+			{/*modal confirming that the changes the user made have been added to the database*/}
 			<div
 				class="saveConfirm"
 				style={{ display: saveConfirmVisible ? "block" : "none" }}
@@ -491,7 +511,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for cancelling changes made on add entry display*/}
+			{/*modal confirming that the user wants to cancel the changes made to adding a new data entry*/}
 			<div
 				class="cancelAdd"
 				style={{ display: cancelAddVisible ? "block" : "none" }}
@@ -506,7 +526,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for deleting a data entry*/}
+			{/*modal confirming that the user wants to delete the selected data entry*/}
 			<div
 				class="deletingEntry"
 				style={{ display: deletingEntryVisible ? "block" : "none" }}
@@ -523,7 +543,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for editing a data entry*/}
+			{/*modal allowing the user to edit the selected data entry*/}
 			<div
 				class="editingEntry"
 				style={{
@@ -623,7 +643,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for cancelling edits made to a data entry*/}
+			{/*modal confirming that the user wants to cancel the edits made to the selected data entry*/}
 			<div
 				class="cancelEdits"
 				style={{ display: cancelEditVisible ? "block" : "none" }}
@@ -645,7 +665,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for saving the edits made to a data entry*/}
+			{/*modal confirming that the user wants to save the edits made to a specific data entry*/}
 			<div
 				class="saveEdits"
 				style={{ display: saveEditVisible ? "block" : "none" }}
@@ -669,7 +689,7 @@ function App() {
 				</div>
 			</div>
 
-			{/*modal for empty FTANumber field*/}
+			{/*modal alerting the user that the FTA Number field is blank and requires a value*/}
 			<div
 				class="missingFTA"
 				style={{ display: missingFTAVisible ? "block" : "none" }}

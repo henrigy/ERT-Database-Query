@@ -1,4 +1,5 @@
 import "./Banner.css";
+//this is for the logo at the top of the web app
 
 const Banner = () => {
 	return (

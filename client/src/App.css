@@ -10,7 +10,7 @@ button {
 	cursor: pointer;
 }
 
-/*search area input and buttons*/
+/*"SEARCH AREA" DISPLAY*/
 .searchArea {
 	background-color: rgb(226, 227, 225);
 	padding: 10px;
@@ -42,7 +42,7 @@ button {
 	margin-right: 5px;
 }
 
-/*adding data entry*/
+/*"CREATE DATA ENTRY" DISPLAY*/
 .addingEntry {
 	background-color: rgb(242, 242, 242);
 	text-align: left;
@@ -95,7 +95,7 @@ button {
 	margin-left: 10px;
 }
 
-/*data display area*/
+/*"DISPLAY ALL DATA ENTRIES" DISPLAY*/
 .dataDisplay {
 	background-color: rgb(242, 242, 242);
 	text-align: left;
@@ -158,7 +158,7 @@ button {
 	margin-left: 10px;
 }
 
-/*search display*/
+/*"RESULTS FOR FTA NUMBER '###'" DISPLAY*/
 .searchScreen {
 	background-color: rgb(242, 242, 242);
 	text-align: left;
@@ -176,8 +176,8 @@ button {
 	margin-bottom: 20px;
 }
 
-/*modals*/
-/*save added entry modal*/
+/*MODALS*/
+/*modal confirming that the user wants to save the created data entry*/
 .saveAddedEntry {
 	position: fixed;
 	z-index: 1;
@@ -203,7 +203,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal for confirming the changes have been made*/
+/*modal confirming that the changes the user made have been added to the database*/
 .saveConfirm {
 	position: fixed;
 	z-index: 1;
@@ -229,7 +229,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal to confirm that added data entry will be cancelled*/
+/*modal confirming that the user wants to cancel the changes made to adding a new data entry*/
 .cancelAdd {
 	position: fixed;
 	z-index: 1;
@@ -255,7 +255,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal confirming the cancelling of a data entry*/
+/*modal confirming that the user wants to delete the selected data entry*/
 .deletingEntry {
 	position: fixed;
 	z-index: 1;
@@ -281,7 +281,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal for editing a data entry*/
+/*modal allowing the user to edit the selected data entry*/
 .editingEntry {
 	position: fixed;
 	z-index: 1;
@@ -352,7 +352,7 @@ button {
 	margin-left: 10px;
 }
 
-/*modal for cancelling data entry edits*/
+/*modal confirming that the user wants to cancel the edits made to the selected data entry*/
 .cancelEdits {
 	position: fixed;
 	z-index: 1;
@@ -378,7 +378,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal for saving data entry edits*/
+/*modal confirming that the user wants to save the edits made to the selected data entry*/
 .saveEdits {
 	position: fixed;
 	z-index: 1;
@@ -404,7 +404,7 @@ button {
 	margin-right: 5px;
 }
 
-/*modal for missing FTANumber field*/
+/*modal alerting the user that the FTA Number field is blank and requires a value*/
 .missingFTA {
 	position: fixed;
 	z-index: 1;

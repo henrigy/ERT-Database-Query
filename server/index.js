@@ -6,13 +6,29 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+//ESTABLISHES CONNECTION TO THE MYSQL DATABASE
 const db = mysql.createConnection({
-	//the connected MySQL database here will need to be replaced
 	user: "root",
 	host: "localhost",
 	password: "Henry111",
 	database: "ertdatabase",
 });
+
+//CREATES THE DATA ENTRIES IN THE MYSQL DATABASE
+//the column name for each coloumn are as follows -- their names are also case sensitive:
+
+//id
+//FTANumber
+//FTARevision
+//testFixture
+//reference
+//partNumber
+//partRevision
+//APNNumber
+//partDescription
+
+//When creating this new table, the column "id" needs to have "PK", "NN", and "AI" checked off
+//All other columns only need "NN" checked off
 
 app.post("/create", (req, res) => {
 	const FTANumber = req.body.FTANumber;
@@ -46,6 +62,7 @@ app.post("/create", (req, res) => {
 	);
 });
 
+//RETURNS THE DATA FROM THE MYSQL DATABASE ACCORDING TO ROW AND COLUMNS
 app.get("/data", (req, res) => {
 	db.query("SELECT * FROM data", (err, result) => {
 		if (err) {
@@ -56,6 +73,7 @@ app.get("/data", (req, res) => {
 	});
 });
 
+//DELETES SELECTED DATA ENTRIES FROM THE MYSQL DATABASE
 app.delete("/delete/:id", (req, res) => {
 	const id = req.params.id;
 	db.query("DELETE FROM data WHERE id = ?", id, (err, result) => {
@@ -67,6 +85,7 @@ app.delete("/delete/:id", (req, res) => {
 	});
 });
 
+//RETURNS THE DATA FROM THE MYSQL DATABASE ACCORDING TO ROW AND COLUMN FOR FTA NUMBERS MATCHING THE SEARCH OPERATOR
 app.get("/search/:displaySearchOperator", (req, res) => {
 	const displaySearchOperator = req.params.displaySearchOperator;
 	db.query(
@@ -82,6 +101,7 @@ app.get("/search/:displaySearchOperator", (req, res) => {
 	);
 });
 
+//UPDATES THE MYSQL DATABASE WITH ANY EDITS MADE TO A SELECTED DATA ENTRY
 app.put("/update", (req, res) => {
 	const id = req.body.id;
 	const newFTANumber = req.body.newFTANumber;
@@ -116,6 +136,7 @@ app.put("/update", (req, res) => {
 	);
 });
 
+//THIS IS THE PORT WHICH THE BACKEND WILL BE CONNECTED TO
 app.listen(3002, () => {
 	console.log("Your server is running on port 3002.");
 });

@@ -15,21 +15,6 @@ const db = mysql.createConnection({
 });
 
 //CREATES THE DATA ENTRIES IN THE MYSQL DATABASE
-//the column name for each coloumn are as follows -- their names are also case sensitive:
-
-//id
-//FTANumber
-//FTARevision
-//testFixture
-//reference
-//partNumber
-//partRevision
-//APNNumber
-//partDescription
-
-//When creating this new table, the column "id" needs to have "PK", "NN", and "AI" checked off
-//All other columns only need "NN" checked off
-
 app.post("/create", (req, res) => {
 	const FTANumber = req.body.FTANumber;
 	const FTARevision = req.body.FTARevision;

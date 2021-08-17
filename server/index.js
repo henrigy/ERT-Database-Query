@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 //ESTABLISHES CONNECTION TO THE MYSQL DATABASE
+//the password needs to be changed to reflect the MySQL password used to login
 const db = mysql.createConnection({
 	user: "root",
 	host: "localhost",
